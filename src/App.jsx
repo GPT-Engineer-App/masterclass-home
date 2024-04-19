@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card.jsx";
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card.jsx";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { Input } from "@/components/ui/input.jsx";
 import "./App.css";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   const masterclasses = [
     { title: "Cooking Basics", description: "Learn the fundamentals of cooking." },
@@ -32,11 +35,28 @@ function App() {
               <p>{mc.description}</p>
             </CardContent>
             <CardFooter>
-              <Button variant="secondary">Learn More</Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setSelectedCourse(mc);
+                  setIsModalOpen(true);
+                }}
+              >
+                Learn More
+              </Button>
             </CardFooter>
           </Card>
         ))}
       </div>
+      {isModalOpen && (
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <DialogContent>
+            <DialogTitle>{selectedCourse?.title}</DialogTitle>
+            <DialogDescription>{selectedCourse?.description}</DialogDescription>
+            {}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
