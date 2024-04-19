@@ -11,9 +11,30 @@ function App() {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   const masterclasses = [
-    { title: "Cooking Basics", description: "Learn the fundamentals of cooking." },
-    { title: "Photography", description: "Master the art of capturing moments." },
-    { title: "Guitar Lessons", description: "Strum the strings like a pro." },
+    {
+      title: "Cooking Basics",
+      description: "Learn the fundamentals of cooking.",
+      modules: [
+        { name: "Introduction to Cooking", submodules: ["Kitchen Safety", "Basic Techniques"] },
+        { name: "Advanced Techniques", submodules: ["Sous Vide Cooking", "Molecular Gastronomy"] },
+      ],
+    },
+    {
+      title: "Photography",
+      description: "Master the art of capturing moments.",
+      modules: [
+        { name: "Basics of Photography", submodules: ["Understanding Your Camera", "Composition"] },
+        { name: "Advanced Photography", submodules: ["Portrait Photography", "Landscape Photography"] },
+      ],
+    },
+    {
+      title: "Guitar Lessons",
+      description: "Strum the strings like a pro.",
+      modules: [
+        { name: "Guitar Basics", submodules: ["Tuning", "Basic Chords"] },
+        { name: "Playing Songs", submodules: ["Playing with a Band", "Solo Performances"] },
+      ],
+    },
   ];
 
   return (
@@ -53,7 +74,18 @@ function App() {
           <DialogContent>
             <DialogTitle>{selectedCourse?.title}</DialogTitle>
             <DialogDescription>{selectedCourse?.description}</DialogDescription>
-            {}
+            <ul>
+              {selectedCourse?.modules.map((module, idx) => (
+                <li key={idx}>
+                  <strong>{module.name}</strong>
+                  <ul>
+                    {module.submodules.map((submodule, subIdx) => (
+                      <li key={subIdx}>{submodule}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
           </DialogContent>
         </Dialog>
       )}
